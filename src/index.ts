@@ -2,14 +2,14 @@ import Axios from 'axios';
 import * as crypto from 'crypto';
 import * as cheerio from 'cheerio';
 
-type ExtractedVideo = Record<string, string>
+export type ExtractedVideo = Record<string, string>
 
 export class NaverTV {
     private readonly PLAYER_INFO_REGEX: RegExp = /var ghtPlayerInfo = {.+?}.+(?=jQuery)/gs;
     private readonly USER_AGENT: string = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36';
     
     constructor(private url: string) {
-        
+        void 0;
     }
 
     private uuidv4() {
@@ -51,6 +51,9 @@ export class NaverTV {
                 format: 'json'
             }
         });
+
+        if (!html) throw new Error('invalid url');
+        
         const $ = cheerio.load(html);
         const url = $('iframe')?.attr('src');
         
