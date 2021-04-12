@@ -104,7 +104,6 @@ export class NaverTV {
             }
         });
 
-        return list.map(({ encodingOption: { name: quality }, source }) => [quality, source])
-            .reduce((r: any, [k, v]: string[]) => ({...r, [k]: v}), <ExtractedVideo>{});
+        return list.reduce((r: any, { encodingOption: { name: quality }, source }) => ({...r, [quality]: source}), <ExtractedVideo>{});
     }
 }
